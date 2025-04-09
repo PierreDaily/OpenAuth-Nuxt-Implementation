@@ -16,11 +16,20 @@ export default defineEventHandler(async (event) => {
       status: 400,
       message: "oAuth code can't be exchange for tokens",
     });
+
+  setCookie(event, "accessToken", result.tokens.access);
+  setCookie(event, "refreshToken", result.tokens.refresh);
+
   const verified = await client.verify(subjects, result.tokens.access, {
     refresh: result.tokens.refresh,
   });
   if (verified.err) {
     throw createError({ status: 401, message: "invalid token" });
+  }
+
+  if (verified.tokens) {
+    setCookie(event, "accessToken", verified.tokens?.access);
+    setCookie(event, "refreshToken", verified.tokens?.refresh);
   }
   return verified.subject.properties;
 });
