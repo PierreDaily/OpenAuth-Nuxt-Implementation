@@ -1,6 +1,11 @@
 <template>
   <div>
-    <NuxtRouteAnnouncer />
-    <NuxtWelcome />
+    <!-- <NuxtRouteAnnouncer /> -->
+    <!-- <NuxtWelcome /> -->
+    <ClientOnly>
+      <OnlineStatus />
+    </ClientOnly>
   </div>
 </template>
+
+<script setup lang="ts"></script>
