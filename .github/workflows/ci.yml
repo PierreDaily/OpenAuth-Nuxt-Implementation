@@ -1,0 +1,30 @@
+name: Docker Build
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install npm dependencies
+        run: |
+          pnpm install
+
+      - name: Run linter
+        run: |
+          pnpm lint
+
+      - name: Run unit test
+        run: |
+          pnpm test
