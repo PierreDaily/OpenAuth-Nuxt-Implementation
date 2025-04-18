@@ -1,10 +1,11 @@
 import type { SessionRepository } from "~/authContext/domain/repository/session";
 import { validateSession } from "~/authContext/utils/session-validation";
+import { generateUrl } from "~/lib/host";
 
 export class httpSession implements SessionRepository {
   async get() {
     try {
-      const res = await fetch("/api/session");
+      const res = await fetch(generateUrl("/api/session"));
       if (!res.ok || res.status === 401) {
         throw new Error("couldn't get user info");
       }
